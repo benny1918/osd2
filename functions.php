@@ -17,6 +17,16 @@ if ( version_compare( $GLOBALS['wp_version'], '4.7', '<' ) ) {
 	return;
 }
 
+//develop branch 1
+function contact_form(){
+      ob_start();
+       ?>
+        <div> <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfS50SUGso90yTbdXGWdmasDcdywuMB-CV91uvVewikem3deQ/viewform?embedded=true" width="640" height="1015" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe> </div>
+       <?php
+       $output = ob_get_contents();   
+       ob_end_clean();   
+       return $output;
+
 
 if ( ! function_exists( 'twentynineteen_setup' ) ) :
 	/**
