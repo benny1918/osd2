@@ -71,7 +71,15 @@ function random_quotes($atts) {
  return $return;
 }
 add_shortcode('quote','random_quotes');
-	   
+
+
+//develop_donate_button
+function donate_shortcode( $atts, $content = null) {
+	//return paypal link and target the button png file
+    return '<a href="https://www.paypal.me/benny1918'.$for.'" target="_blank"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" /></a>';
+}
+add_shortcode('donate', 'donate_shortcode');
+
 
 if ( ! function_exists( 'twentynineteen_setup' ) ) :
 	/**
