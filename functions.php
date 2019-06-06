@@ -31,6 +31,46 @@ function contact_form(){
        return $output;
 }
 add_shortcode('contact', 'contact_form');
+
+
+//develop_random_quote
+function random_quotes($atts) {
+	//initialize array for json file
+  $atts = shortcode_atts(array(
+    'cache' => '3600'
+  ), $atts);
+ 
+ $transient = 'bmq_' . md5(serialize($atts));
+ $cachedposts = get_transient($transient);
+ if ($cachedposts !== false) {
+ return $cachedposts;
+ 
+  } else {
+	  //get json file that generates random quote
+   $json = @file_get_contents('http://api.beliefmedia.com/quotes/random.php');
+   if ($json !== false) $data = json_decode($json, true);
+ 
+   if ($data['status'] == '200') {
+ 
+     $text = (string) $data['data']['quote'];
+     $author = (string) $data['data']['author'];
+     $genre = (string) $data['data']['genre'];
+ 
+     // Format the quote */
+     $return = '"' . $text . '" &mdash; ' . $author;
+ 
+     // Set transient
+     set_transient($transient, $return, $atts['cache']);
+ 
+   } else {
+	   //if no output from json file return unavailable
+     $return = 'Quote unavailable for a few minutes.';
+     set_transient($transient, $return, $expiration = '300');
+   }
+  }
+ return $return;
+}
+add_shortcode('quote','random_quotes');
 	   
 
 if ( ! function_exists( 'twentynineteen_setup' ) ) :
